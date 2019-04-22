@@ -4,9 +4,6 @@ import axios from 'axios';
 import ReactJson from 'react-json-view';
 import FileBase64 from 'react-file-base64';
 
-/**
- * Componente que funciona como el formulario de creación de gastos
- */
 class Predict extends Component{
 
     constructor(props){
@@ -19,7 +16,7 @@ class Predict extends Component{
         this.getPetition = this.getPetition.bind(this);
         this.postPetition = this.postPetition.bind(this);
         this.handleChangeGet = this.handleChangeGet.bind(this);
-        this.handleChangePost = this.handleChangePost.bind(this)
+        this.handleChangePost = this.handleChangePost.bind(this);
     }
 
     handleChangeGet(event) {
@@ -62,40 +59,66 @@ class Predict extends Component{
 
     render(){
         return (
-            <div>
-                {/** GET Petition */}
-                <div>
-                    <h1>GET prediction</h1>
-                    <h2>Url to request: http://localhost:5000/predecir?idPrueba={this.state.url_get_param}</h2>
-                    <div className="field is-horizontal">
-                        <div className="field-label is-normal">
-                            <label className="label">Id Prueba</label>
+            <div className="center">
+                <div className="box">
+                    <div className="columns">
+                        <div class="column separator">
+                            <h1 className="title is-1"> Interpreter </h1>
+                            <form>
+                                <div className="field">
+                                    <label className="label">Id Image</label>
+                                    <div className="control">
+                                        <input className="input" type="text" placeholder="Username" value={this.state.url_get_param} onChange={this.handleChangeGet}/>
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <label className="label">Image Base64</label>
+                                    <div className="control">
+                                        {/*<input className="input" type="password" placeholder="Password" />*/}
+                                        <textarea class="textarea" placeholder="10 lines of textarea" rows="10" value={this.state.url_post_param} onChange={this.handleChangePost}></textarea>
+                                        <div class="file">
+                                            <label class="file-label">
+                                                <div className="file-hidden">
+                                                    <FileBase64
+                                                    multiple={ false }
+                                                    onDone={this.getFiles.bind(this)  } />
+                                                </div>
+                                                
+                                                <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-upload"></i>
+                                                </span>
+                                                <span class="file-label">
+                                                    Choose a file…
+                                                </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+
+                                <div className="buttons">
+                                    <span className="button is-success" onClick={this.getPetition}>GET</span>
+                                    <span className="button is-info" onClick={this.postPetition}>POST</span>
+                                </div>
+                            </form>
                         </div>
-                        <div className="field-body">
-                            <div className="field">
-                            <p className="control">
-                                <input className="input" type="text" placeholder="Id Prueba" value={this.state.url_get_param} onChange={this.handleChangeGet}/>
-                            </p>
-                            </div>
+                        <div className="column">
+                        <form>
+                                <div className="field">
+                                    <label className="label">Image Base64</label>
+                                    <div className="control">
+                                        <ReactJson src={this.state.respuesta}></ReactJson>
+                                    </div>
+                                </div>
+
+                            </form>
+                        
                         </div>
                     </div>
-                    <a className="button is-success" onClick={this.getPetition}>Success</a>
-                    <textarea class="textarea" placeholder="10 lines of textarea" rows="10" value={JSON.stringify(this.state.respuesta)}></textarea>
-                    { /** <ReactJson src={this.state.respuesta} /> */}
+                            
                 </div>
-                {/** End GET Petition */}
-                {/** POST Petition */}
-                <div>
-                    <h1>POST prediction</h1>
-                    <h2>Url to request: http://localhost:5000/predecir</h2>
-                    
-                    <textarea class="textarea" placeholder="10 lines of textarea" rows="10" value={this.state.url_post_param} onChange={this.handleChangePost}></textarea>
-                    <FileBase64
-                        multiple={ false }
-                        onDone={ this.getFiles.bind(this) } />
-                    <a className="button is-success" onClick={this.postPetition}>Success</a>
-                </div>
-                {/** End Post Petition */}
             </div>
         )
     }

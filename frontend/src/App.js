@@ -6,7 +6,7 @@ import Predict from "./components/Predict"
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="login">
         <nav class="navbar" role="navigation" aria-label="main navigation">
           <div class="navbar-brand">
             <a class="navbar-item" href="https://bulma.io">
@@ -29,14 +29,8 @@ class App extends Component {
             </div>
           </div>
         </nav>
-
-        <div className="columns">
-          <div className="column">
-            <Predict></Predict>
-          </div>
-          <div className="column">
-            <Predict></Predict>
-          </div>
+        <div>
+          <Predict></Predict>
         </div>
       </div>
     );
