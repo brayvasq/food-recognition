@@ -107,5 +107,4 @@ venv.bak/
 # Others
 dataset/
 jsons/
-models/
 test/
