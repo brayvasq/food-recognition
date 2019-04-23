@@ -9,6 +9,7 @@ import cv2
 from prediccion import prediccion
 import numpy as np
 import json
+import pruebita_svm
 
 
 # initialize our Flask application and the Keras model
@@ -17,13 +18,7 @@ model = None
 categorias = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
 reconocimiento = prediccion()
 
-escenas = {
-    "desayuno paisa": [0,1,2,3,4],
-    "desayuno paisa cafetero": [12,6,1,0],
-    "desayuno rolo": [9,6,4],
-    "desayuno americano": [5,7,0,8],
-    "desayuno americano ligth": [5,15]
-}
+escenas = ["desayuno paisa","desayuno paisa cafetero","desayuno rolo","desayuno americano","desayuno americano ligth"]
 
 def readb64(base64_string):
     sbuf = io.BytesIO()
@@ -83,24 +78,23 @@ def analisis():
         return "No implementado"
     elif flask.request.method == "POST":
         data = json.loads(flask.request.data)
-        resp = [0,0,0,0,0]
-        info = data['materiales']
-        i = 0
-        for j in info:
-            items = []
-            for k in escenas:
-                if j['idCategoria'] in escenas[k]:
-                    items.append(i)
-                i+=1
-            print(j)
-            print(items)
-            percent = 1/len(items)
-            for i in items:
-                resp[i] += percent
-            i = 0
-
-        print(info)
-        return flask.jsonify(resp)
+        data = data['materiales']
+        vector = []
+        
+        for i in data:
+            vector.append(str(i['idCategoria']))
+            
+        items = 6 - len(vector)
+        for i in range(0,items):
+            vector.append("-1")   
+        resp = pruebita_svm.clf.predict([vector])
+        resp = escenas[resp[0]]
+        data = {
+                "idPrueba": 0,
+                "analisis_escena": resp,
+                "probabilidades": []
+        }
+        return flask.jsonify(data)
 
 @app.route("/predecir", methods=["GET", "POST"])
 def predict():
@@ -121,7 +115,7 @@ def predict():
             predicciones = list(map(lambda x: round(x,2), predicciones))
             data = {
                 "idImagen": idImagen,
-                "predicción": elegirCategoria(categorias[indiceCategoria]).lower(),
+                "prediccion": elegirCategoria(categorias[indiceCategoria]).lower(),
                 "probabilidades": predicciones
             }
             print(data)
@@ -139,7 +133,7 @@ def predict():
             predicciones = list(map(lambda x: round(x,2), predicciones))
             data = {
                 "idImagen": 0,
-                "predicción": elegirCategoria(categorias[indiceCategoria]).lower(),
+                "prediccion": elegirCategoria(categorias[indiceCategoria]).lower(),
                 "probabilidades": predicciones
             }
             # proccess(image, data)
