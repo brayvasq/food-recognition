@@ -15,7 +15,7 @@ style.use("ggplot")
 
 # Se crea un array con la función array de la librería numpy, estos valores van en pares y representan una coordenada
 # Debemos introducir datos para el aprendizaje del algoritmo
-X = np.array([["0", "1", "2", "3", "4", "5"],
+X = np.array([["0", "1", "2", "3", "4", "-1"],
               ["0", "1", "6", "12", "-1", "-1"],  # paisa cafetero
               ["4", "6", "9", "-1", "-1", "-1"],
               ["0", "5", "7", "8", "-1", "-1"],
