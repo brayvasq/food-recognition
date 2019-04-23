@@ -146,7 +146,7 @@ class Predict extends Component{
                         <div className="column">
                         <form>
                                 <div className="field">
-                                    <label className="label">Image Base64</label>
+                                    <label className="label">Result</label>
                                     <div className="control">
                                         <ReactJson src={this.state.respuesta}></ReactJson>
                                     </div>
@@ -181,7 +181,7 @@ class Predict extends Component{
                         <div className="column">
                         <form>
                                 <div className="field">
-                                    <label className="label">Image Base64</label>
+                                    <label className="label">Result</label>
                                     <div className="control">
                                         <ReactJson src={this.state.respuesta_escena}></ReactJson>
                                     </div>
