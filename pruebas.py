@@ -42,8 +42,9 @@ def elegirCategoria(categoria):
 # categorias=["Huevos","Arepas",...]
 categorias = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
 reconocimiento = prediccion()
-imagenPrueba = cv2.imread("test/tuca_frita.jpg", 0)
-indiceCategoria = reconocimiento.predecir(imagenPrueba)
+imagenPrueba = cv2.imread("test/pan.jpg", 0)
+# imagenPrueba = cv2.cvtColor(imagenPrueba, cv2.COLOR_BGR2GRAY)
+indiceCategoria, predicciones = reconocimiento.predecir(imagenPrueba)
 print("La imagen cargada es ", elegirCategoria(categorias[indiceCategoria]))
 while True:
     cv2.imshow("imagen", imagenPrueba)

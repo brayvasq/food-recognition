@@ -84,7 +84,7 @@ model.compile(optimizer=optimizador,
 #Entrenamiento del modelo
 print(imagenes.shape)
 print(probabilidades.shape)
-model.fit(x=imagenes,y=probabilidades,epochs=19,batch_size=100)
+model.fit(x=imagenes,y=probabilidades,epochs=12,batch_size=100)
 
 limiteImagenesPrueba=33
 imagenesPrueba,etiquetasPrueba,probabilidadesPrueba=cargarDatos("test/",num_clases,limiteImagenesPrueba)

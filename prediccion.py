@@ -25,4 +25,4 @@ class prediccion():
         imagenesAPredecir=np.array(pruebas)
         predicciones=self.model.predict(x=imagenesAPredecir)
         claseMayorValor=np.argmax(predicciones, axis=1)
-        return claseMayorValor[0]
+        return claseMayorValor[0], predicciones[0]
