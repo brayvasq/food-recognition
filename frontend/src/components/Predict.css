@@ -1,0 +1,19 @@
+.center{
+    margin-top: 5%;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.file-hidden{
+    display: none;
+}
+
+.file{ 
+    margin-top:1%;
+}
+
+.separator{
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 0px 0px 0px !important;
+}
+
