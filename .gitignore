@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# Others
+dataset/
+jsons/
+models/
+test/
