@@ -8,6 +8,7 @@ from os import path
 import cv2
 from prediccion import prediccion
 import numpy as np
+import json
 
 
 # initialize our Flask application and the Keras model
@@ -15,6 +16,14 @@ app = flask.Flask(__name__)
 model = None
 categorias = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
 reconocimiento = prediccion()
+
+escenas = {
+    "desayuno paisa": [0,1,2,3,4],
+    "desayuno paisa cafetero": [12,6,1,0],
+    "desayuno rolo": [9,6,4],
+    "desayuno americano": [5,7,0,8],
+    "desayuno americano ligth": [5,15]
+}
 
 def readb64(base64_string):
     sbuf = io.BytesIO()
@@ -66,6 +75,32 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
+
+@app.route("/analisisEscena",methods=["GET", "POST"])
+def analisis():
+    data = {"success": False}
+    if flask.request.method == "GET":
+        return "No implementado"
+    elif flask.request.method == "POST":
+        data = json.loads(flask.request.data)
+        resp = [0,0,0,0,0]
+        info = data['materiales']
+        i = 0
+        for j in info:
+            items = []
+            for k in escenas:
+                if j['idCategoria'] in escenas[k]:
+                    items.append(i)
+                i+=1
+            print(j)
+            print(items)
+            percent = 1/len(items)
+            for i in items:
+                resp[i] += percent
+            i = 0
+
+        print(info)
+        return flask.jsonify(resp)
 
 @app.route("/predecir", methods=["GET", "POST"])
 def predict():
