@@ -13,6 +13,8 @@ from tensorflow.python.keras.optimizers import Adam
 #Cargar datos de ejemplo
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+
+img_size=128
 #from Keras.ImpresionImagenes import Impresion
 def cargarDatos(fase,numeroCategorias,limite):
     imagenesCargadas=[]
@@ -20,9 +22,10 @@ def cargarDatos(fase,numeroCategorias,limite):
     valorEsperado=[]
     for categoria in range(0,numeroCategorias):
         for idImagen in range(1,limite):
-            ruta=fase+str(categoria)+"/"+str(categoria)+"_4_"+str(idImagen)+".jpg"
+            ruta=fase+str(categoria)+"/"+str(categoria)+"_10_"+str(idImagen)+".jpg"
             print(ruta)
             imagen=cv2.imread(ruta,0)
+            imagen=cv2.resize(imagen,(img_size, img_size))
             imagen=imagen.flatten()
             imagen=imagen/255
             imagenesCargadas.append(imagen)
@@ -43,7 +46,7 @@ num_chanels=1
 #RGB, HSV -> num_chanels=3
 img_shape=(img_size,img_size,num_chanels)
 num_clases=17
-limiteImagenesPrueba=40
+limiteImagenesPrueba=167
 imagenes,etiquetas,probabilidades=cargarDatos("dataset/",num_clases,limiteImagenesPrueba)
 
 model=Sequential()
@@ -83,7 +86,7 @@ print(imagenes.shape)
 print(probabilidades.shape)
 model.fit(x=imagenes,y=probabilidades,epochs=19,batch_size=100)
 
-limiteImagenesPrueba=40
+limiteImagenesPrueba=33
 imagenesPrueba,etiquetasPrueba,probabilidadesPrueba=cargarDatos("test/",num_clases,limiteImagenesPrueba)
 resultados=model.evaluate(x=imagenesPrueba,y=probabilidadesPrueba)
 print("Resultados pruebas:")
